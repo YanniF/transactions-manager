@@ -1,27 +1,42 @@
 import React, { Component } from 'react';
 
-import Check from './components/UI/Icons/Check';
-import Cancel from './components/UI/Icons/Cancel';
-import List from './components/UI/Icons/List';
-import Minus from './components/UI/Icons/Minus';
-import Plus from './components/UI/Icons/Plus';
+import style from './App.module.css';
+import Transaction from './components/Transaction/Transaction';
+import Button from './components/UI/Button/Button';
+import Input from './components/UI/Input/Input';
 
 class App extends Component {
-  render() {
+  state = {
+    balance: 0,
+    showTransactions: false
+  }
+ 
+  buttonClickedHandler = type => {
+    this.setState({ showTransactions: true });
+    console.log(type)
+  }
+
+  hideFields = type => {
+    if(type === 'ok')
+      console.log('ok')
+    
+    this.setState({ showTransactions: false });
+  }
+  
+  render() {    
     return (
-      <div className="App">
-        <h1 style={{color: '#0A85FF'}}>Transaction<span style={{color: '#404040'}}>Manager</span></h1>
-        <h1 style={{color: '#064789'}}>teste</h1>
-        <h1 style={{color: '#6BCC1D'}}>teste</h1>
-        <h1 style={{color: '#FF3224'}}>teste</h1>
-        <h1 style={{color: '#0A85FF'}}>teste</h1>
-        <h1 style={{color: '#404040'}}>teste</h1>
-        <Check fill="var(--pos-color)" width="100px" height="100px" />
-        <Cancel fill="var(--neg-color)" width="100px" height="100px" />
-        <List fill="var(--primary-color)" width="100px" height="100px" />
-        <Minus fill="var(--text-color)" width="100px" height="100px" />
-        <Plus fill="var(--highlight-color)" width="100px" height="100px" />
-      </div>
+      <main className={style.app}>
+        <h1>Transaction<span style={{ color: "var(--highlight-color)" }}>Manager</span></h1>
+        <Transaction visible={this.state.showTransactions} hideFields={this.hideFields} />
+        <Input disabled={true} value={"R$ " + this.state.balance.toFixed(2)}>Saldo:</Input>
+        <div className={style.buttons}>
+        <div className={style.row}>
+          <Button icon="plus" clicked={() => this.buttonClickedHandler('dep')}>Depositar</Button>
+          <Button icon="minus" color="var(--neg-color)" clicked={() => this.buttonClickedHandler('ret')}>Retirar</Button>
+        </div>
+          <Button icon="list" color="var(--highlight-color)">Listar Transferências</Button>
+        </div>
+      </main>
     );
   }
 }

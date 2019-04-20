@@ -1,0 +1,33 @@
+.app {
+  margin: 5rem auto;
+  padding: 3rem;
+  max-width: 600px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.app h1 {
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  flex-grow: 1;
+}
+
+.row button {
+  flex: 1
+}
+
+.row button:not(:last-child) {
+  margin-right: 2rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
