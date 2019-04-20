@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import style from './Transaction.module.css';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 
 const transaction = props => {
+  const [valueInput, setValueInput] = useState(0);
+  const [description, setDescription] = useState('');
+
   let classes = [style.field];
 
   if (props.visible)
@@ -12,17 +15,12 @@ const transaction = props => {
   else
     classes.push(style.hidden);
 
-
-  const inputChangedHandler = e => {
-    console.log(e.target.value)
-  }
-
   return (
     <div className={classes.join(' ')}>
-      <Input type="number" changed={inputChangedHandler}>Valor:</Input>
-      <Input changed={inputChangedHandler}>Descrição:</Input>
-      <Button icon="check" clicked={() => props.hideFields('ok')}></Button>
-      <Button icon="cancel" color="var(--neg-color)" clicked={() => props.hideFields('cancel')}></Button>
+      <Input type="number" changed={e => setValueInput(e.target.value)} value={valueInput}>Valor:</Input>
+      <Input changed={e => setDescription(e.target.value)} value={description}>Descrição:</Input>
+      <Button icon="check" clicked={() => props.confirmTransaction('ok', valueInput, description)}></Button>
+      <Button icon="cancel" color="var(--neg-color)" clicked={() => props.confirmTransaction('cancel')}></Button>
     </div>
   )
 }

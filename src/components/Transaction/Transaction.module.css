@@ -1,6 +1,7 @@
 .field {
   padding-bottom: .5rem;
   max-height: 0;
+  text-align: center;
   overflow: hidden;  
 }
 

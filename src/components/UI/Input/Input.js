@@ -9,7 +9,6 @@ const input = props => {
       <label className={style.label}>{props.children}
         <input type={props.type ? props.type : "text"} 
           className={style.input} 
-          disabled={props.disabled} 
           defaultValue={props.value}
           onChange={props.changed} />
       </label>
