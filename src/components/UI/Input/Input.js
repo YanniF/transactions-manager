@@ -9,8 +9,9 @@ const input = props => {
       <label className={style.label}>{props.children}
         <input type={props.type ? props.type : "text"} 
           className={style.input} 
-          defaultValue={props.value}
-          onChange={props.changed} />
+          value={props.value}
+          onChange={props.changed}
+          maxLength={props.maxLength} />
       </label>
     </div>
   )

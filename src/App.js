@@ -7,12 +7,19 @@ import Button from './components/UI/Button/Button';
 
 class App extends Component {
   state = {
-    deposits: [],
-    withdraws: [],
+    transactions: [],
     balance: 0,
     type: '',
     showTransactions: false,
     showList: false
+  }
+
+  componentDidMount() {
+    const storage = JSON.parse(localStorage.getItem('transactionState'));
+
+    if(storage) {
+      this.setState({ ...this.state, transactions: [...storage.transactions], balance: storage.balance });
+    }
   }
 
   buttonClickedHandler = type => {
@@ -20,23 +27,31 @@ class App extends Component {
   }
 
   confirmTransactionHandler = (type, value, desc) => {
-    let newDeposits = [...this.state.deposits];
-    let newWithdraws = [...this.state.withdraws];
+    let newTransaction = [...this.state.transactions];
     let newBalance = this.state.balance;
 
     if (type === 'ok') {
+
+      if(value === '' || desc === '') {
+        alert('Por favor, preencha todos os campos'); // TODO - customize this
+        return;
+      }
+
       value = parseInt(value);
 
-      if (this.state.type === 'deposits') {
+      if (this.state.type === 'deposit') {
         newBalance += value;
-        newDeposits.push({ value: value, description: desc, date: new Date() });
+        newTransaction.push({ value: value, description: desc, date: new Date(), type: this.state.type });
       }
       else if (this.state.type === 'withdraw') {
         newBalance -= value;
-        newWithdraws.push({ value: value, description: desc, date: new Date() });
+        newTransaction.push({ value: value, description: desc, date: new Date(), type: this.state.type });
       }
     }
-    this.setState({ ...this.state, deposits: newDeposits, withdraws: newWithdraws, balance: newBalance, showTransactions: false });
+    this.setState(
+      { ...this.state, transactions: newTransaction, balance: newBalance, showTransactions: false },
+      () => localStorage.setItem('transactionState', JSON.stringify(this.state))
+    );   
   }
 
   render() {
@@ -50,12 +65,12 @@ class App extends Component {
         </div>
         <div className={style.buttons}>
           <div className={style.row}>
-            <Button icon="plus" clicked={() => this.buttonClickedHandler('deposits')}>Depositar</Button>
+            <Button icon="plus" clicked={() => this.buttonClickedHandler('deposit')}>Depositar</Button>
             <Button icon="minus" color="var(--neg-color)" clicked={() => this.buttonClickedHandler('withdraw')}>Retirar</Button>
           </div>
           <Button icon="list" color="var(--highlight-color)">Listar Transferências</Button>
         </div>
-        <List visible={this.state.showList} deposits={this.state.deposits} withdraws={this.state.withdraws} />
+        <List visible={this.state.showList} transactions={this.state.transactions} />
       </main>
     );
   }
