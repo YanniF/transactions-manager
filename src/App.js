@@ -56,10 +56,6 @@ class App extends Component {
 
   btnListClickedHandler = () => {
     this.setState({ ...this.state, showList: !this.state.showList });
-    setTimeout(() => {
-      
-      console.log(this.state.showList)
-    }, 1000);
   }
 
   render() {
