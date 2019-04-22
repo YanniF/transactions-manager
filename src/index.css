@@ -25,3 +25,8 @@ body {
     font-size: 14px;
   }
 }
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}

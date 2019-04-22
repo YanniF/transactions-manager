@@ -34,11 +34,11 @@
 }
 
 .date {
-  margin-bottom: .5rem;
+  margin: 1rem 0 .4rem;
 }
 
 .date::before {
-  content: '⇢';
+  content: '▸';
   padding-right: 3px;
 }
 
