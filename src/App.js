@@ -54,6 +54,14 @@ class App extends Component {
     );   
   }
 
+  btnListClickedHandler = () => {
+    this.setState({ ...this.state, showList: !this.state.showList });
+    setTimeout(() => {
+      
+      console.log(this.state.showList)
+    }, 1000);
+  }
+
   render() {
     return (
       <main className={style.app}>
@@ -68,7 +76,7 @@ class App extends Component {
             <Button icon="plus" clicked={() => this.buttonClickedHandler('deposit')}>Depositar</Button>
             <Button icon="minus" color="var(--neg-color)" clicked={() => this.buttonClickedHandler('withdraw')}>Retirar</Button>
           </div>
-          <Button icon="list" color="var(--highlight-color)">Listar Transferências</Button>
+          <Button icon="list" color="var(--highlight-color)" clicked={this.btnListClickedHandler}>Listar Transações</Button>
         </div>
         <List visible={this.state.showList} transactions={this.state.transactions} />
       </main>
